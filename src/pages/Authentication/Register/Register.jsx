@@ -9,12 +9,11 @@ import {
     Select,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import ThirdParty from "../ThirdParty/ThirdParty";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
-import Swal from "sweetalert2";
 
 const Register = () => {
     const { userRegister, userUpdateProfile } = useAuth();
@@ -25,7 +24,10 @@ const Register = () => {
         watch,
         formState: { errors },
     } = useForm();
-    const [show, setShow] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
     const onSubmit = (data) => {
         const filteredValues = Object.entries(data).reduce(
             (acc, [key, value]) => {
@@ -36,22 +38,27 @@ const Register = () => {
             },
             {}
         );
+
+        setSuccess("");
+        setError("");
+
         userRegister(data.email, data.password)
             .then(() => {
                 reset();
                 userUpdateProfile(data.name, data.photo)
                     .then(() => {
-                        Swal.fire({
-                            icon: "success",
-                            title: "Registration completed successfully",
-                        });
+                        setSuccess("Registration completed successfully.");
                     })
                     .catch((error) => {
-                        console.log(error);
+                        const message = error.message;
+                        // console.log(error);
+                        setError(message);
                     });
             })
             .catch((error) => {
-                console.log(error);
+                const message = error.message;
+                // console.log(error);
+                setError(message);
             });
     };
     const password = watch("password");
@@ -108,7 +115,7 @@ const Register = () => {
                         <InputGroup size="md">
                             <Input
                                 pr="4.5rem"
-                                type={show ? "text" : "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder="Enter password"
                                 {...register("password", {
@@ -120,9 +127,11 @@ const Register = () => {
                                 <Button
                                     h="1.75rem"
                                     size="sm"
-                                    onClick={() => setShow(!show)}
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
                                 >
-                                    {show ? "Hide" : "Show"}
+                                    {showPassword ? "Hide" : "Show"}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
@@ -143,7 +152,7 @@ const Register = () => {
                         <InputGroup size="md">
                             <Input
                                 pr="4.5rem"
-                                type={show ? "text" : "password"}
+                                type={showConfirmPassword ? "text" : "password"}
                                 name="confirmPassword"
                                 placeholder="Enter confirm password"
                                 {...register("confirmPassword", {
@@ -160,9 +169,13 @@ const Register = () => {
                                 <Button
                                     h="1.75rem"
                                     size="sm"
-                                    onClick={() => setShow(!show)}
+                                    onClick={() =>
+                                        setShowConfirmPassword(
+                                            !showConfirmPassword
+                                        )
+                                    }
                                 >
-                                    {show ? "Hide" : "Show"}
+                                    {showConfirmPassword ? "Hide" : "Show"}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
@@ -239,6 +252,16 @@ const Register = () => {
                             value="Register"
                         />
                     </div>
+                    {success && (
+                        <div className="form-label">
+                            <p className="text-green-600">{success}</p>
+                        </div>
+                    )}
+                    {error && (
+                        <div className="form-label">
+                            <p className="text-red-500">{error}</p>
+                        </div>
+                    )}
                 </form>
                 <ThirdParty></ThirdParty>
             </div>

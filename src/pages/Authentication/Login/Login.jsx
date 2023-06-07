@@ -1,6 +1,7 @@
 import {
     Button,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Input,
     InputGroup,
@@ -15,13 +16,28 @@ import useTitle from "../../../hooks/useTitle";
 
 const Login = () => {
     const { userLogIn } = useAuth();
-    const { register, handleSubmit, reset } = useForm();
-    const [show, setShow] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+    const [showPassword, setShowPassword] = useState(false);
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
     const onSubmit = (data) => {
-        userLogIn(data.name, data.password)
-            .then(() => {})
+        setSuccess("");
+        setError("");
+
+        userLogIn(data.email, data.password)
+            .then(() => {
+                reset();
+                setSuccess("Login completed successfully.");
+            })
             .catch((error) => {
+                const message = error.message;
                 console.log(error);
+                setError(message);
             });
     };
 
@@ -41,7 +57,7 @@ const Login = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-y-4 mt-10"
                 >
-                    <FormControl>
+                    <FormControl isInvalid={errors.email}>
                         <FormLabel>Email</FormLabel>
                         <Input
                             placeholder="Enter email"
@@ -49,13 +65,17 @@ const Login = () => {
                             type="email"
                             {...register("email", { required: true })}
                         />
+                        <FormErrorMessage>
+                            {errors.email?.type === "required" &&
+                                "Email is required."}
+                        </FormErrorMessage>
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={errors.password}>
                         <FormLabel>Password</FormLabel>
                         <InputGroup size="md">
                             <Input
                                 pr="4.5rem"
-                                type={show ? "text" : "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 placeholder="Enter password"
                                 {...register("password", { required: true })}
@@ -64,12 +84,18 @@ const Login = () => {
                                 <Button
                                     h="1.75rem"
                                     size="sm"
-                                    onClick={() => setShow(!show)}
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
                                 >
-                                    {show ? "Hide" : "Show"}
+                                    {showPassword ? "Hide" : "Show"}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
+                        <FormErrorMessage>
+                            {errors.password?.type === "required" &&
+                                "Password is required."}
+                        </FormErrorMessage>
                     </FormControl>
                     <div className="form-label">
                         <p>
@@ -86,6 +112,16 @@ const Login = () => {
                             value="Login"
                         />
                     </div>
+                    {success && (
+                        <div className="form-label">
+                            <p className="text-green-600">{success}</p>
+                        </div>
+                    )}
+                    {error && (
+                        <div className="form-label">
+                            <p className="text-red-500">{error}</p>
+                        </div>
+                    )}
                 </form>
                 <ThirdParty></ThirdParty>
             </div>
