@@ -1,9 +1,24 @@
 import React from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const ThirdParty = () => {
-    const handleGoogleSignIn = () => {};
+    const { userGoogleSignIn, userGithubSignIn } = useAuth();
 
-    const handleGithubSignIn = () => {};
+    const handleGoogleSignIn = () => {
+        userGoogleSignIn()
+            .then(() => {})
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const handleGithubSignIn = () => {
+        userGithubSignIn()
+            .then(() => {})
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <div className="third-party mt-10 flex gap-x-4">

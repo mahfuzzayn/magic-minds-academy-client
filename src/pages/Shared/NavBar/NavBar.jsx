@@ -11,9 +11,19 @@ import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import magicMindsAcademyLogo from "../../../assets/images/logo/magic_minds_academy_logo.png";
 import useAuth from "../../../hooks/useAuth";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const NavBar = () => {
-    const { user } = useAuth();
+    const { user, userLogOut } = useAuth();
+
+    const handleLogOut = () => {
+        userLogOut()
+            .then(() => {})
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <div className="bg-gradient-to-r from-red-100 to-blue-100 nav-bar flex justify-between p-4 m-4 rounded-lg">
@@ -56,8 +66,7 @@ const NavBar = () => {
                             <MenuItem>
                                 <Link to="/">Dashboard</Link>
                             </MenuItem>
-
-                            <MenuItem _active={false}>
+                            <MenuItem>
                                 <Link
                                     to="/login"
                                     className="bg-red-600 text-center py-1 rounded-md text-white w-full"
@@ -87,7 +96,27 @@ const NavBar = () => {
                     </ul>
                 </div>
                 {user ? (
-                    loggedIn
+                    <div className="ml-6 flex">
+                        <div
+                            data-tooltip-id="mma-tooltip"
+                            data-tooltip-content={
+                                user?.displayName || "No name"
+                            }
+                        >
+                            <img
+                                src={user.photoURL}
+                                className="w-[40px] h-[40px] rounded-full"
+                            />
+                        </div>
+                        <Button
+                            onClick={handleLogOut}
+                            colorScheme="red"
+                            size="md"
+                            className="ml-4"
+                        >
+                            Logout
+                        </Button>
+                    </div>
                 ) : (
                     <Link to="/login">
                         <Button colorScheme="red" size="md" className="ml-6">
@@ -96,6 +125,7 @@ const NavBar = () => {
                     </Link>
                 )}
             </div>
+            <Tooltip id="mma-tooltip" />
         </div>
     );
 };
