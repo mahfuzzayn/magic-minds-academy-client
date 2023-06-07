@@ -56,15 +56,13 @@ const NavBar = () => {
                             <MenuItem>
                                 <Link to="/">Dashboard</Link>
                             </MenuItem>
+
                             <MenuItem _active={false}>
-                                <Link to="/login" className="w-full">
-                                    <Button
-                                        colorScheme="red"
-                                        size="sm"
-                                        className="w-full"
-                                    >
-                                        Login
-                                    </Button>
+                                <Link
+                                    to="/login"
+                                    className="bg-red-600 text-center py-1 rounded-md text-white w-full"
+                                >
+                                    Login
                                 </Link>
                             </MenuItem>
                         </div>
