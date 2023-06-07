@@ -1,6 +1,7 @@
 import {
     Button,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Input,
     InputGroup,
@@ -16,7 +17,13 @@ import useTitle from "../../../hooks/useTitle";
 
 const Register = () => {
     const { userRegister } = useAuth();
-    const { register, handleSubmit, reset } = useForm();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm();
     const [show, setShow] = useState(false);
     const onSubmit = (data) => {
         console.log(data);
@@ -26,7 +33,7 @@ const Register = () => {
         //         console.log(error);
         //     });
     };
-
+    const password = watch("password");
     useTitle("Register");
 
     return (
@@ -44,17 +51,36 @@ const Register = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-y-4 mt-10"
                 >
-                    <FormControl>
+                    <FormControl isInvalid={errors.name}>
                         <FormLabel>
                             Name<span className="text-red-600"> *</span>
                         </FormLabel>
                         <Input
-                            placeholder="Enter Name"
+                            placeholder="Enter name"
                             name="name"
                             {...register("name", { required: true })}
                         />
+                        <FormErrorMessage>
+                            {errors.name?.type === "required" &&
+                                "Name is required."}
+                        </FormErrorMessage>
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={errors.email}>
+                        <FormLabel>
+                            Email<span className="text-red-600"> *</span>
+                        </FormLabel>
+                        <Input
+                            placeholder="Enter email"
+                            name="email"
+                            type="email"
+                            {...register("email", { required: true })}
+                        />
+                        <FormErrorMessage>
+                            {errors.email?.type === "required" &&
+                                "Email is required."}
+                        </FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={errors.password}>
                         <FormLabel>
                             Password<span className="text-red-600"> *</span>
                         </FormLabel>
@@ -64,31 +90,8 @@ const Register = () => {
                                 type={show ? "text" : "password"}
                                 name="password"
                                 placeholder="Enter password"
-                                {...register("password", { required: true })}
-                            />
-                            <InputRightElement width="4.5rem">
-                                <Button
-                                    h="1.75rem"
-                                    size="sm"
-                                    onClick={() => setShow(!show)}
-                                >
-                                    {show ? "Hide" : "Show"}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                    </FormControl>
-                    <FormControl>
-                        <FormLabel>
-                            Confirm Password
-                            <span className="text-red-600"> *</span>
-                        </FormLabel>
-                        <InputGroup size="md">
-                            <Input
-                                pr="4.5rem"
-                                type={show ? "text" : "password"}
-                                name="confirmPassword"
-                                placeholder="Enter confirm password"
-                                {...register("confirmPassword", {
+                                {...register("password", {
+                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*]).{6}/,
                                     required: true,
                                 })}
                             />
@@ -102,16 +105,68 @@ const Register = () => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
+                        <FormErrorMessage>
+                            {errors.password?.type === "required" &&
+                                "Password is required."}
+                        </FormErrorMessage>
+                        <FormErrorMessage>
+                            {errors.password?.type === "pattern" &&
+                                "Password should include a special character,uppercase & minimum 6 characters."}
+                        </FormErrorMessage>
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={errors.confirmPassword}>
+                        <FormLabel>
+                            Confirm Password
+                            <span className="text-red-600"> *</span>
+                        </FormLabel>
+                        <InputGroup size="md">
+                            <Input
+                                pr="4.5rem"
+                                type={show ? "text" : "password"}
+                                name="confirmPassword"
+                                placeholder="Enter confirm password"
+                                {...register("confirmPassword", {
+                                    validate: (value) => {
+                                        return (
+                                            value === password ||
+                                            "Passwords do not match"
+                                        );
+                                    },
+                                    required: true,
+                                })}
+                            />
+                            <InputRightElement width="4.5rem">
+                                <Button
+                                    h="1.75rem"
+                                    size="sm"
+                                    onClick={() => setShow(!show)}
+                                >
+                                    {show ? "Hide" : "Show"}
+                                </Button>
+                            </InputRightElement>
+                        </InputGroup>
+                        <FormErrorMessage>
+                            {errors.confirmPassword?.type === "required" &&
+                                "Confirm password is required."}
+                        </FormErrorMessage>
+                        <FormErrorMessage>
+                            {errors.confirmPassword?.type === "validate" &&
+                                "Confirm password doesn't matches to password."}
+                        </FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={errors.photoURL}>
                         <FormLabel>
                             Photo URL<span className="text-red-600"> *</span>
                         </FormLabel>
                         <Input
-                            placeholder="Enter Photo URL"
+                            placeholder="Enter photo url"
                             name="photoURL"
                             {...register("photoURL", { required: true })}
                         />
+                        <FormErrorMessage>
+                            {errors.photoURL?.type === "required" &&
+                                "Photo url is required."}
+                        </FormErrorMessage>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Gender</FormLabel>
@@ -129,7 +184,7 @@ const Register = () => {
                     <FormControl>
                         <FormLabel>Phone Number</FormLabel>
                         <Input
-                            placeholder="Enter Phone Number"
+                            placeholder="Enter phone number"
                             name="number"
                             type="number"
                             {...register("number", {
@@ -140,7 +195,7 @@ const Register = () => {
                     <FormControl>
                         <FormLabel>Address</FormLabel>
                         <Input
-                            placeholder="Enter Address"
+                            placeholder="Enter address"
                             name="address"
                             type="text"
                             {...register("address", {

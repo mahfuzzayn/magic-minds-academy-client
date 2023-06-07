@@ -42,11 +42,12 @@ const Login = () => {
                     className="flex flex-col gap-y-4 mt-10"
                 >
                     <FormControl>
-                        <FormLabel>Name</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <Input
-                            placeholder="Enter Name"
-                            name="name"
-                            {...register("name", { required: true })}
+                            placeholder="Enter email"
+                            name="email"
+                            type="email"
+                            {...register("email", { required: true })}
                         />
                     </FormControl>
                     <FormControl>
