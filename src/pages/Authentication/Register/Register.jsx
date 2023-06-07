@@ -14,9 +14,10 @@ import { Link } from "react-router-dom";
 import ThirdParty from "../ThirdParty/ThirdParty";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
+import Swal from "sweetalert2";
 
 const Register = () => {
-    const { userRegister } = useAuth();
+    const { userRegister, userUpdateProfile } = useAuth();
     const {
         register,
         handleSubmit,
@@ -26,12 +27,32 @@ const Register = () => {
     } = useForm();
     const [show, setShow] = useState(false);
     const onSubmit = (data) => {
-        console.log(data);
-        // userRegister(data.name, data.password)
-        //     .then(() => {})
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
+        const filteredValues = Object.entries(data).reduce(
+            (acc, [key, value]) => {
+                if (value !== "") {
+                    acc[key] = value;
+                }
+                return acc;
+            },
+            {}
+        );
+        userRegister(data.email, data.password)
+            .then(() => {
+                reset();
+                userUpdateProfile(data.name, data.photo)
+                    .then(() => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Registration completed successfully",
+                        });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     const password = watch("password");
     useTitle("Register");
