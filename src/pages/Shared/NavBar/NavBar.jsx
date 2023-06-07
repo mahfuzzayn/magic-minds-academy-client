@@ -7,15 +7,17 @@ import {
     MenuList,
 } from "@chakra-ui/react";
 import React from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import magicMindsAcademyLogo from "../../../assets/images/logo/magic_minds_academy_logo.png";
 import useAuth from "../../../hooks/useAuth";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { useValidateImageURL } from "use-validate-image-url";
 
 const NavBar = () => {
     const { user, userLogOut } = useAuth();
+    const userPhotoStatus = useValidateImageURL(user?.photoURL);
 
     const handleLogOut = () => {
         userLogOut()
@@ -90,33 +92,58 @@ const NavBar = () => {
                         <li>
                             <Link to="/">Classes</Link>
                         </li>
-                        <li>
-                            <Link to="/">Dashboard</Link>
-                        </li>
+                        {user && (
+                            <li>
+                                <Link to="/">Dashboard</Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
                 {user ? (
-                    <div className="ml-6 flex">
-                        <div
-                            data-tooltip-id="mma-tooltip"
-                            data-tooltip-content={
-                                user?.displayName || "No name"
-                            }
-                        >
-                            <img
-                                src={user.photoURL}
-                                className="w-[40px] h-[40px] rounded-full"
-                            />
+                    userPhotoStatus === "valid" ? (
+                        <div className="ml-6 flex">
+                            <div
+                                data-tooltip-id="mma-tooltip"
+                                data-tooltip-content={
+                                    user?.displayName || "No name"
+                                }
+                            >
+                                <img
+                                    src={user.photoURL}
+                                    className="w-[40px] h-[40px] rounded-full"
+                                />
+                            </div>
+                            <Button
+                                onClick={handleLogOut}
+                                colorScheme="red"
+                                size="md"
+                                className="ml-4"
+                            >
+                                Logout
+                            </Button>
                         </div>
-                        <Button
-                            onClick={handleLogOut}
-                            colorScheme="red"
-                            size="md"
-                            className="ml-4"
-                        >
-                            Logout
-                        </Button>
-                    </div>
+                    ) : (
+                        <>
+                            <div className="ml-6 flex">
+                                <div
+                                    data-tooltip-id="mma-tooltip"
+                                    data-tooltip-content={
+                                        user?.displayName || "No name"
+                                    }
+                                >
+                                    <FaUserCircle className="text-[40px]"></FaUserCircle>
+                                </div>
+                                <Button
+                                    onClick={handleLogOut}
+                                    colorScheme="red"
+                                    size="md"
+                                    className="ml-4"
+                                >
+                                    Logout
+                                </Button>
+                            </div>
+                        </>
+                    )
                 ) : (
                     <Link to="/login">
                         <Button colorScheme="red" size="md" className="ml-6">

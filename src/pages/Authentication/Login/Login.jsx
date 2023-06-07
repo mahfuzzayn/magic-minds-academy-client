@@ -10,11 +10,22 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import ThirdParty from "../ThirdParty/ThirdParty";
+import useAuth from "../../../hooks/useAuth";
+import useTitle from "../../../hooks/useTitle";
 
 const Login = () => {
+    const { userLogIn } = useAuth();
     const { register, handleSubmit, reset } = useForm();
     const [show, setShow] = useState(false);
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        userLogIn(data.name, data.password)
+            .then(() => {})
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useTitle("Login");
 
     return (
         <div className="login my-[130px] mx-5">
