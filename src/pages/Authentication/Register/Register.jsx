@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import ThirdParty from "../ThirdParty/ThirdParty";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
+import axios from "axios";
 
 const Register = () => {
     const { userRegister, userUpdateProfile } = useAuth();
@@ -29,15 +30,25 @@ const Register = () => {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const onSubmit = (data) => {
-        const filteredValues = Object.entries(data).reduce(
+        const filteredUserData = Object.entries(data).reduce(
             (acc, [key, value]) => {
-                if (value !== "") {
+                if (
+                    value !== "" &&
+                    key !== "password" &&
+                    key !== "confirmPassword"
+                ) {
                     acc[key] = value;
                 }
                 return acc;
             },
             {}
         );
+
+        const userData = {
+            ...filteredUserData,
+            date: new Date(),
+            role: "student",
+        };
 
         setSuccess("");
         setError("");
@@ -47,7 +58,19 @@ const Register = () => {
                 reset();
                 userUpdateProfile(data.name, data.photo)
                     .then(() => {
-                        setSuccess("Registration completed successfully.");
+                        axios
+                            .post("http://localhost:5000/users", userData, {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                            })
+                            .then((res) => {
+                                if (res.data.insertedId) {
+                                    setSuccess(
+                                        "Registration completed successfully."
+                                    );
+                                }
+                            });
                     })
                     .catch((error) => {
                         const message = error.message;
@@ -263,7 +286,7 @@ const Register = () => {
                         </div>
                     )}
                 </form>
-                <ThirdParty></ThirdParty>
+                <ThirdParty setSuccess={setSuccess} setError={setError}></ThirdParty>
             </div>
         </div>
     );

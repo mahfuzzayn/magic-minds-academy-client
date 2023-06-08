@@ -123,7 +123,7 @@ const Login = () => {
                         </div>
                     )}
                 </form>
-                <ThirdParty></ThirdParty>
+                <ThirdParty setSuccess={setSuccess} setError={setError}></ThirdParty>
             </div>
         </div>
     );

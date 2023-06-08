@@ -16,6 +16,7 @@ const SliderSection = () => {
             <SectionTitle
                 heading="Welcome to Magic Minds Academy"
                 description="Where Imagination and Education Fuse, Creating Extraordinary Minds. Embark on an Enchanting Learning Journey at Magic Minds Academy - Ignite Your Curiosity, Unleash Your Potential."
+                showGif={true}
             ></SectionTitle>
             <Swiper
                 pagination={pagination}

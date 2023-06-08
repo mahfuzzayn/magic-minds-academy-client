@@ -1,22 +1,75 @@
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
-const ThirdParty = () => {
+const ThirdParty = ({ setSuccess, setError }) => {
     const { userGoogleSignIn, userGithubSignIn } = useAuth();
 
     const handleGoogleSignIn = () => {
+        setSuccess("")
+        setError("")
+
         userGoogleSignIn()
-            .then(() => {})
+            .then((result) => {
+                const loggedUser = result.user;
+                const userData = {
+                    name: loggedUser.displayName,
+                    email: loggedUser?.email || "unknown",
+                    photoURL: loggedUser.photoURL,
+                    date: new Date(),
+                    role: "student",
+                };
+
+                axios
+                    .post("http://localhost:5000/users", userData, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then((res) => {
+                        if (res.data.insertedId) {
+                            setSuccess("Google Sign in completed successfully.");
+                        }
+                    });
+            })
             .catch((error) => {
+                const message = error.message;
                 console.log(error);
+                setError(message);
             });
     };
 
     const handleGithubSignIn = () => {
+        setSuccess("")
+        setError("")
+
         userGithubSignIn()
-            .then(() => {})
+            .then((result) => {
+                const loggedUser = result.user;
+                const userData = {
+                    name: loggedUser.displayName,
+                    email: loggedUser?.email || "unknown",
+                    photoURL: loggedUser.photoURL,
+                    date: new Date(),
+                    role: "student",
+                };
+
+                axios
+                    .post("http://localhost:5000/users", userData, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then((res) => {
+                        if (res.data.insertedId) {
+                            setSuccess("Github Sign in completed successfully.");
+                        }
+                    });
+            })
             .catch((error) => {
+                const message = error.message;
                 console.log(error);
+                setError(message);
             });
     };
 
