@@ -21,7 +21,7 @@ const ThirdParty = () => {
     };
 
     return (
-        <div className="third-party mt-10 flex gap-x-4">
+        <div className="third-party mt-10 flex flex-col sm:flex-row gap-4">
             <button
                 onClick={handleGoogleSignIn}
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg"

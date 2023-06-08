@@ -55,27 +55,102 @@ const NavBar = () => {
                         variant="outline"
                     />
                     <MenuList>
-                        <div className="font-semibold">
-                            <MenuItem>
-                                <Link to="/">Home</Link>
-                            </MenuItem>
-                            <MenuItem>
-                                <Link to="/">Instructors</Link>
-                            </MenuItem>
-                            <MenuItem>
-                                <Link to="/">Classes</Link>
-                            </MenuItem>
-                            <MenuItem>
-                                <Link to="/">Dashboard</Link>
-                            </MenuItem>
-                            <MenuItem>
+                        <div className="hamburger-items mx-2 font-semibold">
+                            <div className="flex">
                                 <Link
-                                    to="/login"
-                                    className="bg-red-600 text-center py-1 rounded-md text-white w-full"
+                                    to="/"
+                                    className="w-full px-1 py-2 hover:bg-gray-100"
                                 >
-                                    Login
+                                    Home
                                 </Link>
-                            </MenuItem>
+                            </div>
+                            <div className="flex">
+                                <Link
+                                    to="/"
+                                    className="w-full px-1  py-2 hover:bg-gray-100"
+                                >
+                                    Instructors
+                                </Link>
+                            </div>
+                            <div className="flex">
+                                <Link
+                                    to="/"
+                                    className="w-full px-1 py-2 hover:bg-gray-100"
+                                >
+                                    Classes
+                                </Link>
+                            </div>
+                            {user && (
+                                <div className="flex">
+                                    <Link
+                                        to="/"
+                                        className="w-full px-1 py-2 hover:bg-gray-100"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                </div>
+                            )}
+                            <div className="authentication mt-2">
+                                {user ? (
+                                    userPhotoStatus === "valid" ? (
+                                        <div className="flex gap-x-4">
+                                            <div
+                                                className="min-w-[40px]"
+                                                data-tooltip-id="mma-tooltip"
+                                                data-tooltip-content={
+                                                    user?.displayName ||
+                                                    "No name"
+                                                }
+                                            >
+                                                <img
+                                                    src={user.photoURL}
+                                                    className="w-[40px] h-[40px] rounded-full"
+                                                />
+                                            </div>
+                                            <Button
+                                                onClick={handleLogOut}
+                                                colorScheme="red"
+                                                size="md"
+                                                className="w-full"
+                                            >
+                                                Logout
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="flex gap-x-4">
+                                                <div
+                                                    className="min-w-[40px]"
+                                                    data-tooltip-id="mma-tooltip"
+                                                    data-tooltip-content={
+                                                        user?.displayName ||
+                                                        "No name"
+                                                    }
+                                                >
+                                                    <FaUserCircle className="text-[40px]"></FaUserCircle>
+                                                </div>
+                                                <Button
+                                                    onClick={handleLogOut}
+                                                    colorScheme="red"
+                                                    size="md"
+                                                    className="w-full"
+                                                >
+                                                    Logout
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )
+                                ) : (
+                                    <div className="flex">
+                                        <Link
+                                            to="/login"
+                                            className="bg-red-600 text-center py-2 mt-2 mx-2 rounded-md text-white w-full"
+                                        >
+                                            Login
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </MenuList>
                 </Menu>
@@ -152,7 +227,7 @@ const NavBar = () => {
                     </Link>
                 )}
             </div>
-            <Tooltip id="mma-tooltip" />
+            <Tooltip id="mma-tooltip" className="z-[100]" />
         </div>
     );
 };

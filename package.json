@@ -25,6 +25,7 @@
     "react-tooltip": "^5.13.1",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.7.11",
+    "swiper": "^9.3.2",
     "use-validate-image-url": "^1.0.0"
   },
   "devDependencies": {
