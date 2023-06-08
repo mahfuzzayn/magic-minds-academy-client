@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const AdminClasses = () => {
-    return (
-        <div>
-            Admin Classes
-        </div>
-    );
+    return <div className="classes">Admin Classes</div>;
 };
 
 export default AdminClasses;

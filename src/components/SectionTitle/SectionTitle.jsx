@@ -2,7 +2,7 @@ import React from "react";
 
 const SectionTitle = ({ heading, description, showGif }) => {
     return (
-        <div className="section-title text-center mt-[130px] mb-10 mx-5">
+        <div className="section-title text-center mt-[100px] mb-10 mx-5">
             <div className="max-w-[768px] mx-auto">
                 {showGif && (
                     <div className="gif max-w-[500px] ml-auto mt-4">

@@ -14,6 +14,8 @@ import { Link, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import useInstructor from "../hooks/useInstructor";
 import { FcBarChart, FcSettings, FcUpLeft } from "react-icons/fc";
+import NavBar from "../pages/Shared/NavBar/NavBar";
+import Footer from "../pages/Shared/Footer/Footer";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
@@ -26,6 +28,7 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
+            <NavBar></NavBar>
             <Button
                 onClick={() => handleClick("xs")}
                 key="xs"
@@ -138,6 +141,7 @@ const Dashboard = () => {
                 </DrawerContent>
             </Drawer>
             <Outlet></Outlet>
+            <Footer></Footer>
         </div>
     );
 };
