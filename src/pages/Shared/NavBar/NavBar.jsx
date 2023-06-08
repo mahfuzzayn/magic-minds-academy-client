@@ -83,7 +83,7 @@ const NavBar = () => {
                             {user && (
                                 <div className="flex">
                                     <Link
-                                        to="/"
+                                        to="/dashboard"
                                         className="w-full px-1 py-2 hover:bg-gray-100"
                                     >
                                         Dashboard
@@ -169,7 +169,7 @@ const NavBar = () => {
                         </li>
                         {user && (
                             <li>
-                                <Link to="/">Dashboard</Link>
+                                <Link to="/dashboard">Dashboard</Link>
                             </li>
                         )}
                     </ul>

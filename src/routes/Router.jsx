@@ -4,6 +4,11 @@ import Home from "../pages/Home/Home/Home";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Login from "../pages/Authentication/Login/Login";
 import Register from "../pages/Authentication/Register/Register";
+import Dashboard from "../layouts/Dashboard";
+import PrivateRoute from "./PrivateRoute";
+import Student from "../pages/Dashboard/Student/Student";
+import Admin from "../pages/Dashboard/Admin/Admin";
+import Instructor from "../pages/Dashboard/Instructor/Instructor";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +26,28 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register></Register>,
+            },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: (
+            <PrivateRoute>
+                <Dashboard></Dashboard>
+            </PrivateRoute>
+        ),
+        children: [
+            {
+                path: "admin",
+                element: <Admin></Admin>,
+            },
+            {
+                path: "instructor",
+                element: <Instructor></Instructor>,
+            },
+            {
+                path: "student",
+                element: <Student></Student>,
             },
         ],
     },
