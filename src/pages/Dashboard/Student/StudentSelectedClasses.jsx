@@ -3,7 +3,7 @@ import React from 'react';
 const StudentSelectedClasses = () => {
     return (
         <div>
-            s
+            ss
         </div>
     );
 };

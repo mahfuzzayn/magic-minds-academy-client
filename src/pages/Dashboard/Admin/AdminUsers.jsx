@@ -2,31 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
-    Button,
     Popover,
     PopoverArrow,
     PopoverBody,
-    PopoverCloseButton,
     PopoverContent,
-    PopoverFooter,
-    PopoverHeader,
     PopoverTrigger,
     Portal,
     Table,
-    TableCaption,
     TableContainer,
     Tbody,
     Td,
-    Tfoot,
     Th,
     Thead,
     Tr,
 } from "@chakra-ui/react";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+import { toast } from "react-toastify";
 
 const AdminUsers = () => {
     const [axiosSecure] = useAxiosSecure();
-    const { data: users = [], isLoading } = useQuery({
+    const { data: users = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
             const res = await axiosSecure.get("/users");
@@ -34,15 +29,35 @@ const AdminUsers = () => {
         },
     });
 
-    const handleMakeInstructor = (_id) => {
-        axiosSecure.post(`/users/instructor/:id`).then((res) => {
-            console.log(res.data);
+    const handleMakeInstructor = (user) => {
+        axiosSecure.patch(`/users/instructor/${user?._id}`).then((res) => {
+            refetch();
+            if (res.data.modifiedCount > 0) {
+                toast.success(`${user?.name} role changed to Instructor`, {
+                    position: "bottom-right",
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
         });
     };
 
-    const handleMakeAdmin = (_id) => {
-        axiosSecure.post(`/users/admin/:id`).then((res) => {
-            console.log(res.data);
+    const handleMakeAdmin = (user) => {
+        axiosSecure.patch(`/users/admin/${user?._id}`).then((res) => {
+            refetch();
+            if (res.data.modifiedCount > 0) {
+                toast.success(`${user?.name} role changed to Admin`, {
+                    position: "bottom-right",
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
         });
     };
 
@@ -84,9 +99,15 @@ const AdminUsers = () => {
                                                     <PopoverBody>
                                                         <div className="space-y-4">
                                                             <button
+                                                                disabled={
+                                                                    user?.role ===
+                                                                        "instructor" ||
+                                                                    user?.role ===
+                                                                        "admin"
+                                                                }
                                                                 onClick={() =>
                                                                     handleMakeInstructor(
-                                                                        user?._id
+                                                                        user
                                                                     )
                                                                 }
                                                                 className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
@@ -94,9 +115,13 @@ const AdminUsers = () => {
                                                                 Make Instructor
                                                             </button>
                                                             <button
+                                                                disabled={
+                                                                    user?.role ===
+                                                                    "admin"
+                                                                }
                                                                 onClick={() =>
                                                                     handleMakeAdmin(
-                                                                        user?.id
+                                                                        user
                                                                     )
                                                                 }
                                                                 className="w-full bg-green-500 text-white p-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400"

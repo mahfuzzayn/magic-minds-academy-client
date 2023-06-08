@@ -30,7 +30,7 @@ const useAxiosSecure = () => {
                     error.response &&
                     [401, 403].includes(error.response.status)
                 ) {
-                    logOut().then(() => {
+                    userLogOut().then(() => {
                         navigate("/login");
                     });
                 }
