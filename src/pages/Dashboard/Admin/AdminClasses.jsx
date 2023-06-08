@@ -1,8 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
     Avatar,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     Popover,
     PopoverArrow,
     PopoverBody,
@@ -14,15 +25,21 @@ import {
     Tag,
     Tbody,
     Td,
+    Textarea,
     Th,
     Thead,
     Tr,
+    useDisclosure,
 } from "@chakra-ui/react";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const AdminClasses = () => {
     const [axiosSecure] = useAxiosSecure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [currentModalClass, setCurrentModalClass] = useState(null);
     const { data: classes = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
@@ -63,6 +80,39 @@ const AdminClasses = () => {
                         progress: undefined,
                         theme: "light",
                     });
+                }
+            });
+    };
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+        axiosSecure
+            .patch(`/classes/${currentModalClass?._id}`, {
+                action: "feedback",
+                feedback: data.feedback,
+            })
+            .then((res) => {
+                refetch();
+                if (res.data.modifiedCount > 0) {
+                    reset();
+                    onClose();
+                    toast.success(
+                        `Feedback sent to ${currentModalClass?.name} class instructor.`,
+                        {
+                            position: "bottom-right",
+                            hideProgressBar: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        }
+                    );
                 }
             });
     };
@@ -174,16 +224,14 @@ const AdminClasses = () => {
                                                             </button>
                                                             <button
                                                                 disabled={
-                                                                    currentClass?.role ===
-                                                                        "instructor" ||
-                                                                    currentClass?.role ===
-                                                                        "admin"
+                                                                    currentClass?.feedback
                                                                 }
-                                                                onClick={() =>
-                                                                    handleMakeInstructor(
+                                                                onClick={() => {
+                                                                    onOpen();
+                                                                    setCurrentModalClass(
                                                                         currentClass
-                                                                    )
-                                                                }
+                                                                    );
+                                                                }}
                                                                 className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
                                                             >
                                                                 Send Feedback
@@ -199,6 +247,69 @@ const AdminClasses = () => {
                         </Tbody>
                     </Table>
                 </TableContainer>
+                <div className="feedback-modal">
+                    <Modal
+                        size="xl"
+                        isCentered
+                        onClose={() => {
+                            onClose();
+                            setCurrentModalClass(null);
+                            reset();
+                        }}
+                        isOpen={isOpen}
+                        motionPreset="slideInBottom"
+                    >
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>Send Feedback</ModalHeader>
+                            <ModalCloseButton />
+                            <form
+                                onSubmit={handleSubmit(onSubmit)}
+                                className="flex flex-col gap-y-4 mt-10"
+                            >
+                                <ModalBody>
+                                    <h2>
+                                        <span className="font-semibold">
+                                            Class Name:
+                                        </span>{" "}
+                                        {currentModalClass?.name}
+                                    </h2>
+                                    <h2>
+                                        <span className="font-semibold">
+                                            Instructor Email:
+                                        </span>{" "}
+                                        <span className="text-red-500">
+                                            {currentModalClass?.instructorEmail}
+                                        </span>
+                                    </h2>
+                                    <FormControl isInvalid={errors.feedback}>
+                                        <Textarea
+                                            placeholder="Write down your feedback here..."
+                                            name="feedback"
+                                            {...register("feedback", {
+                                                required: true,
+                                            })}
+                                            size="md"
+                                            mt={4}
+                                        />
+                                        <FormErrorMessage>
+                                            {errors.feedback?.type ===
+                                                "required" &&
+                                                "Feedback is required."}
+                                        </FormErrorMessage>
+                                    </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <input
+                                        type="submit"
+                                        className="bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
+                                        value="Send Feedback"
+                                    />
+                                </ModalFooter>
+                            </form>
+                        </ModalContent>
+                    </Modal>
+                </div>
             </div>
         </div>
     );
