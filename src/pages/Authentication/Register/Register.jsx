@@ -286,7 +286,10 @@ const Register = () => {
                         </div>
                     )}
                 </form>
-                <ThirdParty setSuccess={setSuccess} setError={setError}></ThirdParty>
+                <ThirdParty
+                    setSuccess={setSuccess}
+                    setError={setError}
+                ></ThirdParty>
             </div>
         </div>
     );

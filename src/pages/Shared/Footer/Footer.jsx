@@ -1,19 +1,11 @@
-import {
-    Button,
-    IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-} from "@chakra-ui/react";
 import React from "react";
-import { FaBars, FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import magicMindsAcademyLogo from "../../../assets/images/logo/magic_minds_academy_logo.png";
 
 const Footer = () => {
     return (
-        <div className="footer bg-gradient-to-r from-blue-100 to-red-100">
+        <div className="footer bg-gradient-to-r from-blue-100 to-red-100 mt-[130px]">
             <div className="flex flex-col md:flex-row-reverse justify-between p-4 gap-y-8">
                 <div className="website-name">
                     <Link to="/" className="flex md:justify-end">

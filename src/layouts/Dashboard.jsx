@@ -9,38 +9,131 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { RiArchiveDrawerFill } from "react-icons/ri";
+import { Link, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
+import useInstructor from "../hooks/useInstructor";
+import { FcBarChart, FcSettings, FcUpLeft } from "react-icons/fc";
 
 const Dashboard = () => {
+    const [isAdmin] = useAdmin();
+    const [isInstructor] = useInstructor();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const handleClick = (newSize) => {
+    const handleClick = () => {
         onOpen();
     };
+
     return (
         <div className="dashboard">
             <Button
-                onClick={() => handleClick('xs')}
-                key='xs'
+                onClick={() => handleClick("xs")}
+                key="xs"
+                bg="red.500"
+                color="white"
                 m={4}
-            >{`Open xs Drawer`}</Button>
-            <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="xs">
+            >
+                Open Drawer{" "}
+                <RiArchiveDrawerFill className="ml-2"></RiArchiveDrawerFill>
+            </Button>
+            <Drawer
+                placement="left"
+                onClose={onClose}
+                isOpen={isOpen}
+                size="xs"
+            >
                 <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>{`xs drawer contents`}</DrawerHeader>
+                    <DrawerHeader>Dashboard</DrawerHeader>
                     <DrawerBody>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Consequat nisl vel pretium
-                            lectus quam id. Semper quis lectus nulla at volutpat
-                            diam ut venenatis. Dolor morbi non arcu risus quis
-                            varius quam quisque. Massa ultricies mi quis
-                            hendrerit dolor magna eget est lorem. Erat imperdiet
-                            sed euismod nisi porta. Lectus vestibulum mattis
-                            ullamcorper velit.
+                        <p className="font-medium">
+                            Role:{" "}
+                            {isAdmin
+                                ? "Admin"
+                                : isInstructor
+                                ? "Instructor"
+                                : "Student"}
                         </p>
+                        <hr className="my-5" />
+                        <h3 className="text-xl my-4 font-semibold flex gap-x-2 items-center">
+                            <FcSettings></FcSettings>
+                            {isAdmin
+                                ? "Admin"
+                                : isInstructor
+                                ? "Instructor"
+                                : "Student"}{" "}
+                            Panel
+                        </h3>
+                        {isAdmin ? (
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link
+                                        to="/dashboard/classes"
+                                        className="hover:text-red-500"
+                                    >
+                                        Manage Classes
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/dashboard/users"
+                                        className="hover:text-red-500"
+                                    >
+                                        Manage Classes
+                                    </Link>
+                                </li>
+                            </ul>
+                        ) : isInstructor ? (
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link
+                                        to="/dashboard/add-a-class"
+                                        className="hover:text-red-500"
+                                    >
+                                        Add a Class
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/dashboard/classes"
+                                        className="hover:text-red-500"
+                                    >
+                                        My Classes
+                                    </Link>
+                                </li>
+                            </ul>
+                        ) : (
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link
+                                        to="/dashboard/selected-classes"
+                                        className="hover:text-red-500"
+                                    >
+                                        My Selected Classes
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/dashboard/enrolled-classes"
+                                        className="hover:text-red-500"
+                                    >
+                                        My Enrolled Classes
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
+                        <hr className="my-5" />
+                        <h3 className="text-xl my-4 font-semibold flex gap-x-2 items-center">
+                            <FcUpLeft></FcUpLeft>Return Links
+                        </h3>
+                        <ul>
+                            <li>
+                                <Link to="/" className="hover:text-red-500">
+                                    Home
+                                </Link>
+                            </li>
+                        </ul>
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

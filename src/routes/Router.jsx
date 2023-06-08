@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import Student from "../pages/Dashboard/Student/Student";
 import Admin from "../pages/Dashboard/Admin/Admin";
 import Instructor from "../pages/Dashboard/Instructor/Instructor";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -39,15 +40,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "admin",
-                element: <Admin></Admin>,
-            },
-            {
-                path: "instructor",
-                element: <Instructor></Instructor>,
-            },
-            {
-                path: "student",
-                element: <Student></Student>,
+                element: (
+                    <AdminRoute>
+                        <Admin></Admin>
+                    </AdminRoute>
+                ),
             },
         ],
     },

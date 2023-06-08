@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ThirdParty from "../ThirdParty/ThirdParty";
 import useAuth from "../../../hooks/useAuth";
 import useTitle from "../../../hooks/useTitle";
@@ -25,6 +25,11 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || "/";
+
     const onSubmit = (data) => {
         setSuccess("");
         setError("");
@@ -33,6 +38,7 @@ const Login = () => {
             .then(() => {
                 reset();
                 setSuccess("Login completed successfully.");
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 const message = error.message;
@@ -123,7 +129,10 @@ const Login = () => {
                         </div>
                     )}
                 </form>
-                <ThirdParty setSuccess={setSuccess} setError={setError}></ThirdParty>
+                <ThirdParty
+                    setSuccess={setSuccess}
+                    setError={setError}
+                ></ThirdParty>
             </div>
         </div>
     );

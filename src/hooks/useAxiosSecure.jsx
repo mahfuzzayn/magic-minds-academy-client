@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
+import { useEffect } from "react";
 
-// Create an Axios instance with base URL
-const instance = axios.create({
+// Create an Axios axiosSecure with base URL
+const axiosSecure = axios.create({
     baseURL: "http://localhost:5000/", // Replace with your base URL
 });
 
@@ -14,7 +14,7 @@ const useAxiosSecure = () => {
 
     useEffect(() => {
         // Add interceptor for setting the JWT token
-        const interceptor = instance.interceptors.request.use((config) => {
+        const interceptor = axiosSecure.interceptors.request.use((config) => {
             const token = localStorage.getItem("access-jwt-token");
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
@@ -23,13 +23,16 @@ const useAxiosSecure = () => {
         });
 
         // Add interceptor for handling errors
-        const errorInterceptor = instance.interceptors.response.use(
+        const errorInterceptor = axiosSecure.interceptors.response.use(
             (response) => response,
             (error) => {
-                if (error.response && error.response.status === 401) {
-                    // Unauthorized error
-                    userLogOut();
-                    navigate("/login");
+                if (
+                    error.response &&
+                    [401, 403].includes(error.response.status)
+                ) {
+                    logOut().then(() => {
+                        navigate("/login");
+                    });
                 }
                 return Promise.reject(error);
             }
@@ -43,7 +46,7 @@ const useAxiosSecure = () => {
     }, [userLogOut, navigate]);
 
     // Return an empty array or any other desired value
-    return [];
+    return [axiosSecure];
 };
 
 export default useAxiosSecure;

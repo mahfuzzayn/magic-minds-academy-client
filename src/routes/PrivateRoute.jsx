@@ -2,7 +2,6 @@ import React from "react";
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
-
 import AnimatedText from "react-animated-text-content";
 
 const PrivateRoute = ({ children }) => {

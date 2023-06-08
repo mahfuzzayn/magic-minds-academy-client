@@ -3,17 +3,17 @@ import {
     IconButton,
     Menu,
     MenuButton,
-    MenuItem,
     MenuList,
 } from "@chakra-ui/react";
 import React from "react";
 import { FaBars, FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import magicMindsAcademyLogo from "../../../assets/images/logo/magic_minds_academy_logo.png";
 import useAuth from "../../../hooks/useAuth";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useValidateImageURL } from "use-validate-image-url";
+import "./NavBar.css";
 
 const NavBar = () => {
     const { user, userLogOut } = useAuth();
@@ -57,37 +57,37 @@ const NavBar = () => {
                     <MenuList>
                         <div className="hamburger-items mx-2 font-semibold">
                             <div className="flex">
-                                <Link
+                                <NavLink
                                     to="/"
                                     className="w-full px-1 py-2 hover:bg-gray-100"
                                 >
                                     Home
-                                </Link>
+                                </NavLink>
                             </div>
                             <div className="flex">
-                                <Link
-                                    to="/"
+                                <NavLink
+                                    to="/instructors"
                                     className="w-full px-1  py-2 hover:bg-gray-100"
                                 >
                                     Instructors
-                                </Link>
+                                </NavLink>
                             </div>
                             <div className="flex">
-                                <Link
-                                    to="/"
+                                <NavLink
+                                    to="/classes"
                                     className="w-full px-1 py-2 hover:bg-gray-100"
                                 >
                                     Classes
-                                </Link>
+                                </NavLink>
                             </div>
                             {user && (
                                 <div className="flex">
-                                    <Link
+                                    <NavLink
                                         to="/dashboard"
                                         className="w-full px-1 py-2 hover:bg-gray-100"
                                     >
                                         Dashboard
-                                    </Link>
+                                    </NavLink>
                                 </div>
                             )}
                             <div className="authentication mt-2">
@@ -159,17 +159,17 @@ const NavBar = () => {
                 <div className="menu-list">
                     <ul className="flex gap-x-10 font-semibold">
                         <li>
-                            <Link to="/">Home</Link>
+                            <NavLink to="/">Home</NavLink>
                         </li>
                         <li>
-                            <Link to="/">Instructors</Link>
+                            <NavLink to="/instructors">Instructors</NavLink>
                         </li>
                         <li>
-                            <Link to="/">Classes</Link>
+                            <NavLink to="/classes">Classes</NavLink>
                         </li>
                         {user && (
                             <li>
-                                <Link to="/dashboard">Dashboard</Link>
+                                <NavLink to="/dashboard">Dashboard</NavLink>
                             </li>
                         )}
                     </ul>

@@ -1,0 +1,4 @@
+.hamburger-items a.active,
+.menu-list a.active {
+    color: #ef4444;
+}
