@@ -69,7 +69,7 @@ const Dashboard = () => {
                             <ul className="space-y-2">
                                 <li>
                                     <Link
-                                        to="/dashboard/classes"
+                                        to="/dashboard/admin/classes"
                                         className="hover:text-red-500"
                                     >
                                         Manage Classes
@@ -77,10 +77,10 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        to="/dashboard/users"
+                                        to="/dashboard/admin/users"
                                         className="hover:text-red-500"
                                     >
-                                        Manage Classes
+                                        Manage Users
                                     </Link>
                                 </li>
                             </ul>
@@ -88,7 +88,7 @@ const Dashboard = () => {
                             <ul className="space-y-2">
                                 <li>
                                     <Link
-                                        to="/dashboard/add-a-class"
+                                        to="/dashboard/instructor/add-a-class"
                                         className="hover:text-red-500"
                                     >
                                         Add a Class
@@ -96,7 +96,7 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        to="/dashboard/classes"
+                                        to="/dashboard/instructor/classes"
                                         className="hover:text-red-500"
                                     >
                                         My Classes
@@ -107,7 +107,7 @@ const Dashboard = () => {
                             <ul className="space-y-2">
                                 <li>
                                     <Link
-                                        to="/dashboard/selected-classes"
+                                        to="/dashboard/student/selected-classes"
                                         className="hover:text-red-500"
                                     >
                                         My Selected Classes
@@ -115,7 +115,7 @@ const Dashboard = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        to="/dashboard/enrolled-classes"
+                                        to="/dashboard/student/enrolled-classes"
                                         className="hover:text-red-500"
                                     >
                                         My Enrolled Classes

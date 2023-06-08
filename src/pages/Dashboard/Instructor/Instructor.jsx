@@ -1,9 +1,10 @@
-import React from 'react';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 const Instructor = () => {
     return (
-        <div>
-            s
+        <div className="instructor">
+            <Outlet></Outlet>
         </div>
     );
 };
