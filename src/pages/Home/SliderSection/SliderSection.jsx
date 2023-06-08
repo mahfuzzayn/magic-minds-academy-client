@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./SliderSection.css";
 import { Pagination } from "swiper";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
 const SliderSection = () => {
     const pagination = {
@@ -12,6 +13,10 @@ const SliderSection = () => {
 
     return (
         <div className="slider-section">
+            <SectionTitle
+                heading="Welcome to Magic Minds Academy"
+                description="Where Imagination and Education Fuse, Creating Extraordinary Minds. Embark on an Enchanting Learning Journey at Magic Minds Academy - Ignite Your Curiosity, Unleash Your Potential."
+            ></SectionTitle>
             <Swiper
                 pagination={pagination}
                 modules={[Pagination]}
