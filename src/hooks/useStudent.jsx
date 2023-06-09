@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 import useAuth from "./useAuth";
 
-const useInstructor = () => {
+const useStudent = () => {
     const { user, loading } = useAuth();
     const [axiosSecure] = useAxiosSecure();
 
@@ -10,15 +10,15 @@ const useInstructor = () => {
         return [null, false];
     }
 
-    const {data: isInstructor, isLoading: isInstructorLoading} = useQuery({
-        queryKey: ["isInstructor"],
+    const {data: isStudent, isLoading: isStudentLoading} = useQuery({
+        queryKey: ["isStudent"],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure(`/users/instructor/${user?.email}`)
-            return res.data.instructor;
+            const res = await axiosSecure(`/users/student/${user?.email}`)
+            return res.data.student;
         },
     });
-    return [isInstructor, isInstructorLoading]
+    return [isStudent, isStudentLoading]
 };
 
-export default useInstructor;
+export default useStudent;

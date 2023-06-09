@@ -6,7 +6,6 @@ import {
     FormLabel,
     Input,
 } from "@chakra-ui/react";
-import { useLocation } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";

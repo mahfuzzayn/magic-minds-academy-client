@@ -17,6 +17,9 @@ import InstructorAddAClass from "../pages/Dashboard/Instructor/InstructorAddACla
 import InstructorClasses from "../pages/Dashboard/Instructor/InstructorClasses";
 import StudentSelectedClasses from "../pages/Dashboard/Student/StudentSelectedClasses";
 import StudentEnrolledClasses from "../pages/Dashboard/Student/StudentEnrolledClasses";
+import StudentRoute from "./StudentRoute";
+import ClassesPage from "../pages/ClassesPage/ClassesPage";
+import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +37,14 @@ const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <Register></Register>,
+            },
+            {
+                path: "/instructors",
+                element: <InstructorsPage></InstructorsPage>,
+            },
+            {
+                path: "/classes",
+                element: <ClassesPage></ClassesPage>,
             },
         ],
     },
@@ -83,7 +94,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "student",
-                element: <Student></Student>,
+                element: (
+                    <StudentRoute>
+                        <Student></Student>
+                    </StudentRoute>
+                ),
                 children: [
                     {
                         path: "selected-classes",

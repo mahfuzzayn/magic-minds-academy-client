@@ -20,11 +20,13 @@ import Footer from "../pages/Shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useTitle from "../hooks/useTitle";
+import useStudent from "../hooks/useStudent";
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
     const [isInstructor] = useInstructor();
-    useTitle("Dashboard")
+    const [isStudent] = useStudent();
+    useTitle("Dashboard");
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleClick = () => {
@@ -67,14 +69,18 @@ const Dashboard = () => {
                                             ? "green"
                                             : isInstructor
                                             ? "yellow"
-                                            : "red"
+                                            : isStudent
+                                            ? "red"
+                                            : null
                                     }
                                 >
                                     {isAdmin
                                         ? "Admin"
                                         : isInstructor
                                         ? "Instructor"
-                                        : "Student"}
+                                        : isStudent
+                                        ? "Student"
+                                        : null}
                                 </Tag>
                             </p>
                             <hr className="my-5" />

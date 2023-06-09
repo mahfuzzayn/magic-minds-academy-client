@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
     Avatar,
     FormControl,
@@ -13,19 +12,12 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-    Popover,
-    PopoverArrow,
-    PopoverBody,
-    PopoverContent,
-    PopoverTrigger,
-    Portal,
     Table,
     TableContainer,
     Tag,
     Tbody,
     Td,
     Input,
-    Textarea,
     Th,
     Thead,
     Tr,
@@ -35,10 +27,10 @@ import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import axios from "axios";
 
 const InstructorClasses = () => {
     const { user } = useAuth();
-    const [axiosSecure] = useAxiosSecure();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -46,46 +38,10 @@ const InstructorClasses = () => {
     const { data: classes = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/classes");
+            const res = await axios.get("http://localhost:5000/classes");
             return res.data;
         },
     });
-
-    const handleStatusApprove = (currentClass) => {
-        axiosSecure
-            .patch(`/classes/${currentClass?._id}`, { action: "approve" })
-            .then((res) => {
-                refetch();
-                if (res.data.modifiedCount > 0) {
-                    toast.success(`${currentClass?.name} status approved.`, {
-                        position: "bottom-right",
-                        hideProgressBar: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-            });
-    };
-
-    const handleStatusDeny = (currentClass) => {
-        axiosSecure
-            .patch(`/classes/${currentClass?._id}`, { action: "deny" })
-            .then((res) => {
-                refetch();
-                if (res.data.modifiedCount > 0) {
-                    toast.success(`${currentClass?.name} status denied.`, {
-                        position: "bottom-right",
-                        hideProgressBar: false,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-            });
-    };
 
     const {
         register,
@@ -185,6 +141,7 @@ const InstructorClasses = () => {
                                 <Th>No.</Th>
                                 <Th>Image</Th>
                                 <Th>Name</Th>
+                                <Th>Available Seats</Th>
                                 <Th>Price</Th>
                                 <Th>Status</Th>
                                 <Th>Enrolled Students</Th>
@@ -204,6 +161,7 @@ const InstructorClasses = () => {
                                         />
                                     </Td>
                                     <Td>{currentClass?.name}</Td>
+                                    <Td>{currentClass?.availableSeats}</Td>
                                     <Td>${currentClass?.price}</Td>
                                     <Td>
                                         <Tag
@@ -236,10 +194,10 @@ const InstructorClasses = () => {
                                                 setIsFeedbackModalOpen(
                                                     !isFeedbackModalOpen
                                                 );
-                                                onOpen();
                                                 setCurrentModalClass(
                                                     currentClass
                                                 );
+                                                onOpen();
                                             }}
                                             className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-400 disabled:bg-gray-500"
                                         >
@@ -254,10 +212,10 @@ const InstructorClasses = () => {
                                                 setIsUpdateModalOpen(
                                                     !isUpdateModalOpen
                                                 );
-                                                onOpen();
                                                 setCurrentModalClass(
                                                     currentClass
                                                 );
+                                                onOpen();
                                             }}
                                             className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400"
                                         >

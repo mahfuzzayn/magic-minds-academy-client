@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
     Avatar,
     FormControl,
@@ -32,22 +31,22 @@ import {
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const AdminClasses = () => {
-    const [axiosSecure] = useAxiosSecure();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [currentModalClass, setCurrentModalClass] = useState(null);
     const { data: classes = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/classes");
+            const res = await axios.get("http://localhost:5000/classes");
             return res.data;
         },
     });
 
     const handleStatusApprove = (currentClass) => {
         axiosSecure
-            .patch(`/classes/${currentClass?._id}`, { action: "approve" })
+            .patch(`/classes/admin/${currentClass?._id}`, { action: "approve" })
             .then((res) => {
                 refetch();
                 if (res.data.modifiedCount > 0) {
@@ -90,7 +89,7 @@ const AdminClasses = () => {
 
     const onSubmit = (data) => {
         axiosSecure
-            .patch(`/classes/${currentModalClass?._id}`, {
+            .patch(`/classes/admin/${currentModalClass?._id}`, {
                 action: "feedback",
                 feedback: data.feedback,
             })
