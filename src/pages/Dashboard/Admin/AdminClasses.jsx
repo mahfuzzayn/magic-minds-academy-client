@@ -3,10 +3,8 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import {
     Avatar,
-    Button,
     FormControl,
     FormErrorMessage,
-    FormLabel,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -34,7 +32,6 @@ import {
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 const AdminClasses = () => {
     const [axiosSecure] = useAxiosSecure();
@@ -68,7 +65,7 @@ const AdminClasses = () => {
 
     const handleStatusDeny = (currentClass) => {
         axiosSecure
-            .patch(`/classes/${currentClass?._id}`, { action: "deny" })
+            .patch(`/classes/admin/${currentClass?._id}`, { action: "deny" })
             .then((res) => {
                 refetch();
                 if (res.data.modifiedCount > 0) {

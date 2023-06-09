@@ -42,6 +42,7 @@ const InstructorAddAClass = () => {
             ...filteredUserData,
             instructorName: user?.displayName,
             instructorEmail: user?.email,
+            enrolledStudents: 0,
             status: "pending",
         };
         axiosSecure.post("/classes", newClass).then((res) => {
