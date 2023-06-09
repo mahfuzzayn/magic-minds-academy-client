@@ -5,12 +5,18 @@ import useAuth from "../../hooks/useAuth";
 import { Card, CardBody, CardFooter, Stack, Image } from "@chakra-ui/react";
 import axios from "axios";
 import useAdmin from "../../hooks/useAdmin";
+import useInstructor from "../../hooks/useInstructor";
+import useStudent from "../../hooks/useStudent";
 
 const classesPage = () => {
     const { user, loading } = useAuth();
-    const isAdmin = user ? useAdmin() : "ternary else";
+    const [isAdmin] = useAdmin();
+    const [isInstructor] = useInstructor();
+    const [isStudent] = useStudent();
 
-    console.log(isAdmin);
+    // console.log("isAdmin", isAdmin);
+    // console.log("isInstructor", isInstructor);
+    // console.log("isStudent", isStudent);
 
     const { data: classes = [] } = useQuery({
         queryKey: ["classes"],
@@ -67,7 +73,10 @@ const classesPage = () => {
                                 </div>
                             </CardBody>
                             <CardFooter>
-                                <button className="bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400">
+                                <button
+                                    disabled={isAdmin || isInstructor}
+                                    className="bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400"
+                                >
                                     Select Class
                                 </button>
                             </CardFooter>
