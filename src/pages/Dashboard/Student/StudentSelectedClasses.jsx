@@ -95,7 +95,7 @@ const StudentSelectedClasses = () => {
                                     <Td>
                                         <Popover>
                                             <PopoverTrigger>
-                                                <button className="w-full bg-yellow-500 text-white px-2 font-semibold rounded-md hover:bg-yellow-400 mt-0">
+                                                <button className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-400">
                                                     Options
                                                 </button>
                                             </PopoverTrigger>
@@ -110,7 +110,7 @@ const StudentSelectedClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-green-500 text-white px-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400 mt-0"
+                                                                className="w-full bg-green-500 text-white p-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400"
                                                             >
                                                                 Pay
                                                             </button>
@@ -120,7 +120,7 @@ const StudentSelectedClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400 mt-0"
+                                                                className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400"
                                                             >
                                                                 Delete
                                                             </button>

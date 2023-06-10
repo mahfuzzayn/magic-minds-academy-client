@@ -46,14 +46,13 @@ const NavBar = () => {
                     </p>
                 </Link>
             </div>
-            <div className="hamburger-menu lg:hidden">
+            <div className="hamburger-menu md:hidden">
                 <Menu>
                     <MenuButton
                         as={IconButton}
                         aria-label="Options"
                         icon={<FaBars />}
                         variant="outline"
-                        className="mt-0"
                     />
                     <MenuList>
                         <div className="hamburger-items mx-2 font-semibold">
@@ -94,7 +93,7 @@ const NavBar = () => {
                             <div className="authentication mt-2">
                                 {user ? (
                                     userPhotoStatus === "valid" ? (
-                                        <div className="flex items-center gap-x-4">
+                                        <div className="flex gap-x-4">
                                             <div
                                                 className="min-w-[40px]"
                                                 data-tooltip-id="mma-tooltip"
@@ -112,14 +111,14 @@ const NavBar = () => {
                                                 onClick={handleLogOut}
                                                 colorScheme="red"
                                                 size="md"
-                                                className="w-full mt-0"
+                                                className="w-full"
                                             >
                                                 Logout
                                             </Button>
                                         </div>
                                     ) : (
                                         <>
-                                            <div className="flex items-center gap-x-4">
+                                            <div className="flex gap-x-4">
                                                 <div
                                                     className="min-w-[40px]"
                                                     data-tooltip-id="mma-tooltip"
@@ -134,7 +133,7 @@ const NavBar = () => {
                                                     onClick={handleLogOut}
                                                     colorScheme="red"
                                                     size="md"
-                                                    className="w-full mt-0"
+                                                    className="w-full"
                                                 >
                                                     Logout
                                                 </Button>
@@ -156,7 +155,7 @@ const NavBar = () => {
                     </MenuList>
                 </Menu>
             </div>
-            <div className="hidden lg:flex items-center">
+            <div className="hidden md:flex items-center">
                 <div className="menu-list">
                     <ul className="flex gap-x-10 font-semibold">
                         <li>
@@ -177,7 +176,7 @@ const NavBar = () => {
                 </div>
                 {user ? (
                     userPhotoStatus === "valid" ? (
-                        <div className="ml-6 flex items-center">
+                        <div className="ml-6 flex">
                             <div
                                 data-tooltip-id="mma-tooltip"
                                 data-tooltip-content={
@@ -193,14 +192,14 @@ const NavBar = () => {
                                 onClick={handleLogOut}
                                 colorScheme="red"
                                 size="md"
-                                className="ml-4 mt-0"
+                                className="ml-4"
                             >
                                 Logout
                             </Button>
                         </div>
                     ) : (
                         <>
-                            <div className="ml-6 flex items-center">
+                            <div className="ml-6 flex">
                                 <div
                                     data-tooltip-id="mma-tooltip"
                                     data-tooltip-content={
@@ -213,7 +212,7 @@ const NavBar = () => {
                                     onClick={handleLogOut}
                                     colorScheme="red"
                                     size="md"
-                                    className="ml-4 mt-0"
+                                    className="ml-4"
                                 >
                                     Logout
                                 </Button>
@@ -222,11 +221,7 @@ const NavBar = () => {
                     )
                 ) : (
                     <Link to="/login">
-                        <Button
-                            colorScheme="red"
-                            size="md"
-                            className="ml-6 mt-0"
-                        >
+                        <Button colorScheme="red" size="md" className="ml-6">
                             Login
                         </Button>
                     </Link>

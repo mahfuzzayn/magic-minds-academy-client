@@ -86,11 +86,10 @@ const Login = () => {
                                 placeholder="Enter password"
                                 {...register("password", { required: true })}
                             />
-                            <InputRightElement width="4.5rem" className="mt-2">
+                            <InputRightElement width="4.5rem">
                                 <Button
                                     h="1.75rem"
                                     size="sm"
-                                    className="mt-0"
                                     onClick={() =>
                                         setShowPassword(!showPassword)
                                     }
@@ -115,7 +114,7 @@ const Login = () => {
                     <div className="form-label">
                         <input
                             type="submit"
-                            className="bg-red-500 px-4 text-white rounded-lg cursor-pointer w-auto mt-0"
+                            className="bg-red-500 px-4 py-2 text-white rounded-lg cursor-pointer"
                             value="Login"
                         />
                     </div>

@@ -6,8 +6,8 @@ const ThirdParty = ({ setSuccess, setError }) => {
     const { userGoogleSignIn, userGithubSignIn } = useAuth();
 
     const handleGoogleSignIn = () => {
-        setSuccess("");
-        setError("");
+        setSuccess("")
+        setError("")
 
         userGoogleSignIn()
             .then((result) => {
@@ -28,9 +28,7 @@ const ThirdParty = ({ setSuccess, setError }) => {
                     })
                     .then((res) => {
                         if (res.data.insertedId) {
-                            setSuccess(
-                                "Google Sign in completed successfully."
-                            );
+                            setSuccess("Google Sign in completed successfully.");
                         }
                     });
             })
@@ -42,8 +40,8 @@ const ThirdParty = ({ setSuccess, setError }) => {
     };
 
     const handleGithubSignIn = () => {
-        setSuccess("");
-        setError("");
+        setSuccess("")
+        setError("")
 
         userGithubSignIn()
             .then((result) => {
@@ -64,9 +62,7 @@ const ThirdParty = ({ setSuccess, setError }) => {
                     })
                     .then((res) => {
                         if (res.data.insertedId) {
-                            setSuccess(
-                                "Github Sign in completed successfully."
-                            );
+                            setSuccess("Github Sign in completed successfully.");
                         }
                     });
             })
@@ -81,13 +77,13 @@ const ThirdParty = ({ setSuccess, setError }) => {
         <div className="third-party mt-10 flex flex-col sm:flex-row gap-4">
             <button
                 onClick={handleGoogleSignIn}
-                className="bg-blue-500 text-white px-4 rounded-lg mt-0"
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg"
             >
                 Sign in With Google
             </button>
             <button
                 onClick={handleGithubSignIn}
-                className="bg-black text-white px-4 rounded-lg mt-0"
+                className="bg-black text-white py-2 px-4 rounded-lg"
             >
                 Sign in With Github
             </button>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import "./CheckoutForm.css";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ price, queryClass }) => {
     const stripe = useStripe();
@@ -14,6 +16,7 @@ const CheckoutForm = ({ price, queryClass }) => {
     const [clientSecret, setClientSecret] = useState("");
     const [processing, setProcessing] = useState(false);
     const [transactionId, setTransactionId] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (price > 0) {
@@ -43,10 +46,10 @@ const CheckoutForm = ({ price, queryClass }) => {
         });
 
         if (error) {
-            console.log("[error]", error);
+            // console.log("[error]", error);
             setCardError(error.message);
         } else {
-            console.log("[payment method]", paymentMethod);
+            // console.log("[payment method]", paymentMethod);
             setCardError("");
         }
 
@@ -64,15 +67,14 @@ const CheckoutForm = ({ price, queryClass }) => {
             });
 
         if (confirmError) {
-            console.log(confirmError);
+            // console.log(confirmError);
         }
 
         setProcessing(false);
 
         if (paymentIntent.status === "succeeded") {
-            console.log("payment done", queryClass);
+            // console.log("payment done", queryClass);
             setTransactionId(paymentIntent.id);
-            // save payment information to the server
             const payment = {
                 email: user?.email,
                 transactionId: paymentIntent.id,
@@ -83,17 +85,36 @@ const CheckoutForm = ({ price, queryClass }) => {
                 className: queryClass?.name,
             };
             axiosSecure.post("/payments", payment).then((res) => {
-                console.log(res.data);
-                if (res.data.insertResult.insertedId) {
-                    // display confirm
+                if (
+                    res.data.insertResult.insertedId &&
+                    res.data.updateResult.modifiedCount > 0 &&
+                    res.data.deleteResult.deletedCount > 0
+                ) {
+                    toast.success(
+                        `Payment successfully done of ${queryClass?.name} class`,
+                        {
+                            position: "bottom-right",
+                            hideProgressBar: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        }
+                    );
+                    // Navigate Student to Enrolled Classes Route
+                    setTimeout(() => {
+                        navigate("/dashboard/student/enrolled-classes", {
+                            replace: true,
+                        });
+                    }, 1000);
                 }
             });
         }
     };
 
     return (
-        <>
-            <form className="w-2/3 m-8" onSubmit={handleSubmit}>
+        <div className="w-full mx-5">
+            <form className="w-full" onSubmit={handleSubmit}>
                 <CardElement
                     options={{
                         style: {
@@ -109,22 +130,34 @@ const CheckoutForm = ({ price, queryClass }) => {
                             },
                         },
                     }}
+                    className="w-auto mx-auto mt-4"
                 />
-                <button
-                    className="btn btn-primary btn-sm mt-4"
-                    type="submit"
-                    disabled={!stripe || !clientSecret || processing}
-                >
-                    Pay
-                </button>
+                <div className="form-control text-center mt-5">
+                    {cardError && (
+                        <p className="text-red-600 font-semibold">
+                            {cardError}
+                        </p>
+                    )}
+                </div>
+                <div className="form-control text-center mt-5">
+                    {transactionId && (
+                        <p className="text-green-500 font-semibold">
+                            Payment successfully completed with Transaction ID:{" "}
+                            {transactionId}
+                        </p>
+                    )}
+                </div>
+                <div className="form-control flex justify-center mt-10">
+                    <button
+                        type="submit"
+                        disabled={!stripe || !clientSecret || processing}
+                        className="w-full max-w-xs bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400"
+                    >
+                        Pay Now
+                    </button>
+                </div>
             </form>
-            {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
-            {transactionId && (
-                <p className="text-green-500">
-                    Transaction complete with transactionId: {transactionId}
-                </p>
-            )}
-        </>
+        </div>
     );
 };
 

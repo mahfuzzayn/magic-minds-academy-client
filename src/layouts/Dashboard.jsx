@@ -55,7 +55,7 @@ const Dashboard = () => {
                 >
                     <DrawerOverlay />
                     <DrawerContent>
-                        <DrawerCloseButton color="black" />
+                        <DrawerCloseButton />
                         <DrawerHeader>Dashboard</DrawerHeader>
                         <DrawerBody>
                             <p className="font-medium">
