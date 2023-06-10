@@ -28,10 +28,12 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const InstructorClasses = () => {
     const { user } = useAuth();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [axiosSecure] = useAxiosSecure();
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [currentModalClass, setCurrentModalClass] = useState(null);
@@ -199,7 +201,7 @@ const InstructorClasses = () => {
                                                 );
                                                 onOpen();
                                             }}
-                                            className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-400 disabled:bg-gray-500"
+                                            className="w-full bg-yellow-500 text-white px-2 font-semibold rounded-md hover:bg-yellow-400 disabled:bg-gray-500 mt-0"
                                         >
                                             {currentClass?.status !== "pending"
                                                 ? "See Feedback"
@@ -217,7 +219,7 @@ const InstructorClasses = () => {
                                                 );
                                                 onOpen();
                                             }}
-                                            className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400"
+                                            className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-400 mt-0"
                                         >
                                             Update
                                         </button>
@@ -250,7 +252,10 @@ const InstructorClasses = () => {
                             <ModalOverlay />
                             <ModalContent>
                                 <ModalHeader>See Feedback</ModalHeader>
-                                <ModalCloseButton />
+                                <ModalCloseButton
+                                    color="black"
+                                    className="mt-1"
+                                />
                                 <div
                                     onSubmit={handleSubmit(onSubmit)}
                                     className="flex flex-col gap-y-4 mt-5"
@@ -318,10 +323,10 @@ const InstructorClasses = () => {
                                 <ModalHeader>
                                     Update Class - {currentModalClass?.name}
                                 </ModalHeader>
-                                <ModalCloseButton />
+                                <ModalCloseButton color="black" />
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex flex-col gap-y-4 mt-5 px-10 pb-10"
+                                    className="w-full flex flex-col gap-y-4 mt-5 px-10 pb-10"
                                 >
                                     <FormControl isInvalid={errors.name}>
                                         <FormLabel>Class Name</FormLabel>
@@ -425,7 +430,7 @@ const InstructorClasses = () => {
                                     <div className="form-label mt-2">
                                         <input
                                             type="submit"
-                                            className="bg-red-500 px-4 py-2 text-white rounded-lg cursor-pointer"
+                                            className="bg-red-500 px-4 text-white rounded-lg cursor-pointer mt-0 w-auto"
                                             value="Update Class"
                                         />
                                     </div>

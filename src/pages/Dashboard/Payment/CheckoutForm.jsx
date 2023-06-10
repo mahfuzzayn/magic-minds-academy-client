@@ -5,7 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import "./CheckoutForm.css";
 
-const CheckoutForm = ({ price, cart }) => {
+const CheckoutForm = ({ price, queryClass }) => {
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useAuth();
@@ -20,7 +20,6 @@ const CheckoutForm = ({ price, cart }) => {
             axiosSecure
                 .post("/create-payment-intent", { price })
                 .then((res) => {
-                    // console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret);
                 });
         }
@@ -71,6 +70,7 @@ const CheckoutForm = ({ price, cart }) => {
         setProcessing(false);
 
         if (paymentIntent.status === "succeeded") {
+            console.log("payment done", queryClass);
             setTransactionId(paymentIntent.id);
             // save payment information to the server
             const payment = {
@@ -78,11 +78,9 @@ const CheckoutForm = ({ price, cart }) => {
                 transactionId: paymentIntent.id,
                 price,
                 date: new Date(),
-                quantity: cart.length,
-                cartItems: cart.map((item) => item._id),
-                menuItems: cart.map((item) => item.menuItemId),
-                orderStatus: "service pending",
-                itemNames: cart.map((item) => item.name),
+                selectedClass: queryClass?._id,
+                class: queryClass?.classId,
+                className: queryClass?.name,
             };
             axiosSecure.post("/payments", payment).then((res) => {
                 console.log(res.data);

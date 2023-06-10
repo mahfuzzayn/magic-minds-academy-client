@@ -21,13 +21,18 @@ import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useSelectedClasses from "../../../hooks/useSelectedClasses";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const StudentSelectedClasses = () => {
     const { user } = useAuth();
     const [axiosSecure] = useAxiosSecure();
     const [selectedClasses, refetch] = useSelectedClasses();
+    const navigate = useNavigate();
 
-    const handlePay = (currentClass) => {};
+    const handlePay = (currentClass) => {
+        console.log(currentClass);
+        navigate(`/dashboard/payment?classId=${currentClass?.classId}`);
+    };
 
     const handleDelete = (currentClass) => {
         axiosSecure
@@ -90,7 +95,7 @@ const StudentSelectedClasses = () => {
                                     <Td>
                                         <Popover>
                                             <PopoverTrigger>
-                                                <button className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-400 mt-0">
+                                                <button className="w-full bg-yellow-500 text-white px-2 font-semibold rounded-md hover:bg-yellow-400 mt-0">
                                                     Options
                                                 </button>
                                             </PopoverTrigger>
@@ -105,7 +110,7 @@ const StudentSelectedClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-green-500 text-white p-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400"
+                                                                className="w-full bg-green-500 text-white px-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Pay
                                                             </button>
@@ -115,7 +120,7 @@ const StudentSelectedClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400"
+                                                                className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Delete
                                                             </button>
