@@ -146,10 +146,11 @@ const Register = () => {
                                     required: true,
                                 })}
                             />
-                            <InputRightElement width="4.5rem">
+                            <InputRightElement width="4.5rem" className="mt-2">
                                 <Button
                                     h="1.75rem"
                                     size="sm"
+                                    className="mt-0"
                                     onClick={() =>
                                         setShowPassword(!showPassword)
                                     }
@@ -188,10 +189,11 @@ const Register = () => {
                                     required: true,
                                 })}
                             />
-                            <InputRightElement width="4.5rem">
+                            <InputRightElement width="4.5rem" className="mt-2">
                                 <Button
                                     h="1.75rem"
                                     size="sm"
+                                    className="mt-0"
                                     onClick={() =>
                                         setShowConfirmPassword(
                                             !showConfirmPassword
@@ -230,6 +232,7 @@ const Register = () => {
                         <Select
                             placeholder="Choose your gender"
                             name="gender"
+                            className="pt-0"
                             {...register("gender", {
                                 maxLength: 20,
                             })}
@@ -271,7 +274,7 @@ const Register = () => {
                     <div className="form-label">
                         <input
                             type="submit"
-                            className="bg-red-500 px-4 py-2 text-white rounded-lg cursor-pointer"
+                            className="bg-red-500 px-4 py-2 text-white rounded-lg cursor-pointer w-auto"
                             value="Register"
                         />
                     </div>

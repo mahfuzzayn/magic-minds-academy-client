@@ -61,6 +61,22 @@ const AdminUsers = () => {
         });
     };
 
+    const handleDeleteUser = (user) => {
+        axiosSecure.delete(`/users/admin/${user?._id}`).then((res) => {
+            if (res.data.deletedCount > 0) {
+                refetch();
+                toast.success(`${user?.name} has been deleted successfully.`, {
+                    position: "bottom-right",
+                    hideProgressBar: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        });
+    };
+
     return (
         <div className="users mx-5">
             <SectionTitle
@@ -89,12 +105,12 @@ const AdminUsers = () => {
                                     <Td>
                                         <Popover>
                                             <PopoverTrigger>
-                                                <button className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400">
-                                                    Update Role
+                                                <button className="w-full bg-red-400 text-white px-2 font-semibold rounded-md hover:bg-red-300 mt-0">
+                                                    Update
                                                 </button>
                                             </PopoverTrigger>
                                             <Portal>
-                                                <PopoverContent maxWidth={180}>
+                                                <PopoverContent maxWidth={190}>
                                                     <PopoverArrow />
                                                     <PopoverBody>
                                                         <div className="space-y-4">
@@ -110,7 +126,7 @@ const AdminUsers = () => {
                                                                         user
                                                                     )
                                                                 }
-                                                                className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
+                                                                className="w-full bg-yellow-500 text-white px-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Make Instructor
                                                             </button>
@@ -124,9 +140,19 @@ const AdminUsers = () => {
                                                                         user
                                                                     )
                                                                 }
-                                                                className="w-full bg-green-500 text-white p-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400"
+                                                                className="w-full bg-green-500 text-white px-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Make Admin
+                                                            </button>
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleDeleteUser(
+                                                                        user
+                                                                    )
+                                                                }
+                                                                className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400 mt-0"
+                                                            >
+                                                                Delete User
                                                             </button>
                                                         </div>
                                                     </PopoverBody>

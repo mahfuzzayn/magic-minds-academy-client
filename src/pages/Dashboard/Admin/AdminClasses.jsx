@@ -177,7 +177,7 @@ const AdminClasses = () => {
                                     <Td>
                                         <Popover>
                                             <PopoverTrigger>
-                                                <button className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400">
+                                                <button className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-400 mt-0">
                                                     Update
                                                 </button>
                                             </PopoverTrigger>
@@ -198,7 +198,7 @@ const AdminClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-green-500 text-white p-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400"
+                                                                className="w-full bg-green-500 text-white px-2 font-semibold rounded-md hover:bg-green-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Approve
                                                             </button>
@@ -214,7 +214,7 @@ const AdminClasses = () => {
                                                                         currentClass
                                                                     )
                                                                 }
-                                                                className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400"
+                                                                className="w-full bg-red-500 text-white px-2 font-semibold rounded-md hover:bg-red-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Deny
                                                             </button>
@@ -228,7 +228,7 @@ const AdminClasses = () => {
                                                                         currentClass
                                                                     );
                                                                 }}
-                                                                className="w-full bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
+                                                                className="w-full bg-yellow-500 text-white px-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400 mt-0"
                                                             >
                                                                 Send Feedback
                                                             </button>

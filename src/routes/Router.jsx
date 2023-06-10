@@ -20,6 +20,7 @@ import StudentEnrolledClasses from "../pages/Dashboard/Student/StudentEnrolledCl
 import StudentRoute from "./StudentRoute";
 import ClassesPage from "../pages/ClassesPage/ClassesPage";
 import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
+import Payment from "../pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
                         ),
                     },
                 ],
+            },
+            {
+                path: "payment",
+                element: <Payment></Payment>,
             },
         ],
     },
