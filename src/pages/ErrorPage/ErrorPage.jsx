@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useTitle from "../../hooks/useTitle";
 
 const ErrorPage = () => {
+    useTitle("404");
+
     return (
         <div className="error-page 404 mt-[100px] mb-[130px]">
             <div className="flex flex-col justify-center items-center">

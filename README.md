@@ -1,4 +1,4 @@
-# Magic Minds Academy - Client
+## ![alt text](https://i.ibb.co/n7QgQw2/favicon-v2.png) Magic Minds Academy - Client
 
 Live site: https://magic-minds-academy.web.app/
 
