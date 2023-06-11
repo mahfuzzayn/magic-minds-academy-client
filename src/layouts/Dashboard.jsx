@@ -149,6 +149,14 @@ const Dashboard = () => {
                                             My Enrolled Classes
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            to="/dashboard/student/payment-history"
+                                            className="hover:text-red-500"
+                                        >
+                                            Payment History
+                                        </Link>
+                                    </li>
                                 </ul>
                             )}
                             <hr className="my-5" />

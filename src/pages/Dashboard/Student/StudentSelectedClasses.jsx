@@ -21,16 +21,16 @@ import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useSelectedClasses from "../../../hooks/useSelectedClasses";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 const StudentSelectedClasses = () => {
-    const { user } = useAuth();
     const [axiosSecure] = useAxiosSecure();
     const [selectedClasses, refetch] = useSelectedClasses();
     const navigate = useNavigate();
+    useTitle("Dashboard");
 
     const handlePay = (currentClass) => {
-        console.log(currentClass);
         navigate(`/dashboard/payment?classId=${currentClass?.classId}`);
     };
 
@@ -61,7 +61,7 @@ const StudentSelectedClasses = () => {
         <div className="users mx-5">
             <SectionTitle
                 heading="Selected Classes"
-                description=""
+                description="The Selected Classes section is where users can view and manage the classes they have enrolled in. It provides information about the classes they have chosen and allows them to perform actions such as deleting their enrollment."
             ></SectionTitle>
             <div className="max-w-[1280px] w-full mx-auto border-2 border-red-100 rounded-lg p-4">
                 <TableContainer>
@@ -84,7 +84,7 @@ const StudentSelectedClasses = () => {
                                     <Td>
                                         <Avatar
                                             size="md"
-                                            name="Prosper Otemuyiwa"
+                                            name="I G"
                                             src={currentClass.image}
                                         />
                                     </Td>

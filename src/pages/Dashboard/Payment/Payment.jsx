@@ -4,6 +4,7 @@ import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
 import useSelectedClasses from "../../../hooks/useSelectedClasses";
 import { useLocation, useNavigate } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
@@ -15,6 +16,7 @@ const Payment = () => {
         (currentClass) => currentClass?.classId === queryClassId
     );
     const price = parseFloat(queryClass?.price.toFixed(2)) || 0;
+    useTitle("Payment")
 
     return (
         <div className="payment">

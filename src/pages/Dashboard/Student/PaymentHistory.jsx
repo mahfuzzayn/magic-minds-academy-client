@@ -17,19 +17,15 @@ import useTitle from "../../../hooks/useTitle";
 import useClasses from "../../../hooks/useClasses";
 import moment from "moment/moment";
 
-const StudentEnrolledClasses = () => {
+const PaymentHistory = () => {
     const [enrolledClasses] = useEnrolledClasses();
     useTitle("Dashboard");
-
-    // console.log(enrolledClasses, classes);
-    // console.log(classes);
-    // console.log(classes.find(c => c?._id === ))
 
     return (
         <div className="users mx-5">
             <SectionTitle
-                heading="Enrolled Classes"
-                description="Welcome to the Enrolled Classes section!Here, you can view the classes you have enrolled in. This section provides you with easy access to important information about your enrolled classes and allows you to stay organized."
+                heading="Payment History"
+                description="Welcome to the Payment History section! In this section, you can view and track your payment history for the classes you have availed. It provides you with a comprehensive overview of your past transactions, allowing you to keep track of your financial records related to your educational pursuits."
             ></SectionTitle>
             <div className="max-w-[1280px] w-full mx-auto border-2 border-red-100 rounded-lg p-4">
                 <TableContainer>
@@ -39,8 +35,7 @@ const StudentEnrolledClasses = () => {
                                 <Th>No.</Th>
                                 <Th>Image</Th>
                                 <Th>Name</Th>
-                                <Th>Instructor Name</Th>
-                                <Th>Instructor Email</Th>
+                                <Th>Transaction ID</Th>
                                 <Th>Price</Th>
                                 <Th>Purchase Date</Th>
                             </Tr>
@@ -57,8 +52,11 @@ const StudentEnrolledClasses = () => {
                                         />
                                     </Td>
                                     <Td>{currentClass?.className}</Td>
-                                    <Td>{currentClass?.instructorName}</Td>
-                                    <Td>{currentClass?.instructorEmail}</Td>
+                                    <Td>
+                                        <span className="bg-green-500 text-white px-2 py-0.5 rounded-md">
+                                            {currentClass?.transactionId}
+                                        </span>
+                                    </Td>
                                     <Td>
                                         <span className="bg-blue-500 text-white px-2 py-0.5 rounded-md">
                                             ${currentClass?.price}
@@ -79,4 +77,4 @@ const StudentEnrolledClasses = () => {
     );
 };
 
-export default StudentEnrolledClasses;
+export default PaymentHistory;

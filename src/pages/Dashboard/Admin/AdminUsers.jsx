@@ -106,7 +106,7 @@ const AdminUsers = () => {
                                         <Popover>
                                             <PopoverTrigger>
                                                 <button className="w-full bg-red-400 text-white p-2 font-semibold rounded-md hover:bg-red-300">
-                                                    Update
+                                                    Manage
                                                 </button>
                                             </PopoverTrigger>
                                             <Portal>

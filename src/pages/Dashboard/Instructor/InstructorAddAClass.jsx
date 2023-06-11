@@ -10,10 +10,13 @@ import useAuth from "../../../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import axios from "axios";
+const imgHostingToken = import.meta.env.VITE_Image_Upload_Token;
 
 const InstructorAddAClass = () => {
     const { user } = useAuth();
     const [axiosSecure] = useAxiosSecure();
+    const imgHostingURL = `https://api.imgbb.com/1/upload?key=${imgHostingToken}`;
     const {
         register,
         handleSubmit,
@@ -22,6 +25,8 @@ const InstructorAddAClass = () => {
     } = useForm();
 
     const onSubmit = (data) => {
+        const formData = new FormData();
+        formData.append("image", data.image[0]);
         const filteredUserData = Object.entries(data).reduce(
             (acc, [key, value]) => {
                 if (
@@ -30,33 +35,45 @@ const InstructorAddAClass = () => {
                     key !== "name"
                 ) {
                     acc[key] = parseFloat(value);
-                } else {
+                } else if (key !== "image") {
                     acc[key] = value;
                 }
                 return acc;
             },
             {}
         );
-        const newClass = {
-            ...filteredUserData,
-            instructorName: user?.displayName,
-            instructorEmail: user?.email,
-            enrolledStudents: 0,
-            status: "pending",
-        };
-        axiosSecure.post("/classes", newClass).then((res) => {
-            if (res.data.insertedId) {
-                reset();
-                toast.success(`${data.name} class added successfully.`, {
-                    position: "bottom-right",
-                    hideProgressBar: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
+        // Upload Image File to ImgBB
+        axios
+            .post(imgHostingURL, formData)
+            .then((res) => {
+                const newClass = {
+                    ...filteredUserData,
+                    image: res.data.data.url,
+                    instructorName: user?.displayName,
+                    instructorEmail: user?.email,
+                    enrolledStudents: 0,
+                    status: "pending",
+                };
+                axiosSecure.post("/classes", newClass).then((res) => {
+                    if (res.data.insertedId) {
+                        reset();
+                        toast.success(
+                            `${data.name} class added successfully.`,
+                            {
+                                position: "bottom-right",
+                                hideProgressBar: false,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                            }
+                        );
+                    }
                 });
-            }
-        });
+            })
+            .catch((error) => {
+                // console.log(error);
+            });
     };
 
     return (
@@ -91,7 +108,8 @@ const InstructorAddAClass = () => {
                             <Input
                                 placeholder="Enter class image"
                                 name="image"
-                                type="text"
+                                type="file"
+                                className="pt-1"
                                 {...register("image", { required: true })}
                             />
                             <FormErrorMessage>

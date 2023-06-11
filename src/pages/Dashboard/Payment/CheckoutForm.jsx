@@ -72,17 +72,20 @@ const CheckoutForm = ({ price, queryClass }) => {
 
         setProcessing(false);
 
-        if (paymentIntent.status === "succeeded") {
+        if (paymentIntent?.status === "succeeded") {
             // console.log("payment done", queryClass);
             setTransactionId(paymentIntent.id);
             const payment = {
                 email: user?.email,
+                instructorName: queryClass?.instructorName,
+                instructorEmail: queryClass?.instructorEmail,
+                class: queryClass?.classId,
+                className: queryClass?.name,
+                classImage: queryClass?.image,
+                selectedClass: queryClass?._id,
                 transactionId: paymentIntent.id,
                 price,
                 date: new Date(),
-                selectedClass: queryClass?._id,
-                class: queryClass?.classId,
-                className: queryClass?.name,
             };
             axiosSecure.post("/payments", payment).then((res) => {
                 if (

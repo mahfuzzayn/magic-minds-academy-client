@@ -31,7 +31,7 @@ import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const InstructorClasses = () => {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [axiosSecure] = useAxiosSecure();
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -39,8 +39,11 @@ const InstructorClasses = () => {
     const [currentModalClass, setCurrentModalClass] = useState(null);
     const { data: classes = [], refetch } = useQuery({
         queryKey: ["users"],
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/classes");
+            const res = await axios.get(
+                `http://localhost:5000/classes?email=${user?.email}`
+            );
             return res.data;
         },
     });
@@ -158,7 +161,7 @@ const InstructorClasses = () => {
                                     <Td>
                                         <Avatar
                                             size="md"
-                                            name="Prosper Otemuyiwa"
+                                            name="I G"
                                             src={currentClass.image}
                                         />
                                     </Td>

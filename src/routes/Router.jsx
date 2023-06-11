@@ -21,6 +21,7 @@ import StudentRoute from "./StudentRoute";
 import ClassesPage from "../pages/ClassesPage/ClassesPage";
 import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/Student/PaymentHistory";
 
 const router = createBrowserRouter([
     {
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
                         element: (
                             <StudentEnrolledClasses></StudentEnrolledClasses>
                         ),
+                    },
+                    {
+                        path: "payment-history",
+                        element: <PaymentHistory></PaymentHistory>,
                     },
                 ],
             },

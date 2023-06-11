@@ -32,8 +32,10 @@ import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AdminClasses = () => {
+    const [axiosSecure] = useAxiosSecure();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [currentModalClass, setCurrentModalClass] = useState(null);
     const { data: classes = [], refetch } = useQuery({
@@ -143,7 +145,7 @@ const AdminClasses = () => {
                                     <Td>
                                         <Avatar
                                             size="md"
-                                            name="Prosper Otemuyiwa"
+                                            name="I G"
                                             src={currentClass.image}
                                         />
                                     </Td>
@@ -298,7 +300,7 @@ const AdminClasses = () => {
                                 <ModalFooter>
                                     <input
                                         type="submit"
-                                        className="bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
+                                        className="bg-yellow-500 text-white p-2 font-semibold rounded-md hover:bg-yellow-700 disabled:bg-gray-400 cursor-pointer"
                                         value="Send Feedback"
                                     />
                                 </ModalFooter>
