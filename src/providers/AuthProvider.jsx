@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
             console.log("OnAuthStateChange", currentUser);
             if (currentUser && currentUser?.email) {
                 axios
-                    .post("http://localhost:5000/jwt", {
+                    .post("https://magic-minds-academy-server.vercel.app/jwt", {
                         email: currentUser.email,
                     })
                     .then((res) => {

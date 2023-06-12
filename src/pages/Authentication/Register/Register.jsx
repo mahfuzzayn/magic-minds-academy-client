@@ -59,7 +59,7 @@ const Register = () => {
                 userUpdateProfile(data.name, data.photo)
                     .then(() => {
                         axios
-                            .post("http://localhost:5000/users", userData, {
+                            .post("https://magic-minds-academy-server.vercel.app/users", userData, {
                                 headers: {
                                     "Content-Type": "application/json",
                                 },

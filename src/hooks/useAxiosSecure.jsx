@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 // Create an Axios axiosSecure with base URL
 const axiosSecure = axios.create({
-    baseURL: "http://localhost:5000/", // Replace with your base URL
+    baseURL: "https://magic-minds-academy-server.vercel.app/", // Replace with your base URL
 });
 
 const useAxiosSecure = () => {

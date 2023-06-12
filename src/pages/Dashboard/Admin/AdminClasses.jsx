@@ -41,7 +41,7 @@ const AdminClasses = () => {
     const { data: classes = [], refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/classes");
+            const res = await axios.get("https://magic-minds-academy-server.vercel.app/classes");
             return res.data;
         },
     });

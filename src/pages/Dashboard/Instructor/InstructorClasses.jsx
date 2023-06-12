@@ -42,7 +42,7 @@ const InstructorClasses = () => {
         enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axios.get(
-                `http://localhost:5000/classes?email=${user?.email}`
+                `https://magic-minds-academy-server.vercel.app/classes?email=${user?.email}`
             );
             return res.data;
         },
@@ -213,6 +213,10 @@ const InstructorClasses = () => {
                                     </Td>
                                     <Td>
                                         <button
+                                            disabled={
+                                                currentClass?.status ===
+                                                "approved"
+                                            }
                                             onClick={() => {
                                                 setIsUpdateModalOpen(
                                                     !isUpdateModalOpen
@@ -222,7 +226,7 @@ const InstructorClasses = () => {
                                                 );
                                                 onOpen();
                                             }}
-                                            className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400"
+                                            className="w-full bg-red-500 text-white p-2 font-semibold rounded-md hover:bg-red-400 disabled:bg-gray-400"
                                         >
                                             Update
                                         </button>

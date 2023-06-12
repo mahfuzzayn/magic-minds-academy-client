@@ -1,9 +1,29 @@
 import React from "react";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import useInstructorsData from "../../hooks/useInstructorsData";
+import useTitle from "../../hooks/useTitle";
+import { Spinner } from "@chakra-ui/react";
 
 const InstructorsPage = () => {
-    const [instructors] = useInstructorsData();
+    const [instructors, isInstructorsLoading] = useInstructorsData();
+    useTitle("Instructors");
+
+    if (isInstructorsLoading) {
+        return (
+            <div className="mt-[130px] text-center">
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="red.500"
+                    size="xl"
+                />
+                <h2 className="animated-paragraph text-2xl font-semibold mt-4 text-red-500">
+                    L O A D I N G
+                </h2>
+            </div>
+        );
+    }
 
     return (
         <div className="instructors">
