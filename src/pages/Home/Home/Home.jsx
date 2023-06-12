@@ -4,6 +4,7 @@ import SliderSection from "../SliderSection/SliderSection";
 import useTheme from "../../../hooks/useTheme";
 import PopularClasses from "../PopularClasses/PopularClasses";
 import PopularInstructors from "../PopularInstructors/PopularInstructors";
+import FAQSection from "../FAQSection/FAQSection";
 
 const Home = () => {
     const { theme } = useTheme();
@@ -14,6 +15,7 @@ const Home = () => {
             <SliderSection></SliderSection>
             <PopularClasses></PopularClasses>
             <PopularInstructors></PopularInstructors>
+            <FAQSection></FAQSection>
         </div>
     );
 };

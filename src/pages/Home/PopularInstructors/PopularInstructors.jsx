@@ -8,13 +8,13 @@ const PopularInstructors = () => {
     const [instructors] = useInstructorsData();
 
     return (
-        <div className="popular-instructors mx-5">
+        <div className="popular-instructors mx-5 mt-[130px]">
             <SectionTitle heading="Popular Instructors"></SectionTitle>
             <div className="instructors-container container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-10 mx-auto">
                 {instructors.map((instructor) => (
                     <motion.div
                         key={instructor?._id}
-                        className="bg-red-100 rounded-full max-w-[300px]"
+                        className="h-full flex max-w-[300px] flex-col items-center border-2 border-blue-100 rounded-full p-6"
                         whileHover={{
                             scale: 1.1,
                             transition: { duration: 0.2 },
@@ -23,7 +23,7 @@ const PopularInstructors = () => {
                         <div className="picture">
                             <img
                                 src={instructor?.photoURL}
-                                className="object-cover w-full rounded-full"
+                                className="h-[250px] w-[250px] rounded-full object-cover"
                                 alt=""
                             />
                         </div>

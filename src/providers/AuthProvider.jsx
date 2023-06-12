@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            console.log("OnAuthStateChange", currentUser);
+            // console.log("OnAuthStateChange", currentUser);
             if (currentUser && currentUser?.email) {
                 axios
                     .post("https://magic-minds-academy-server.vercel.app/jwt", {

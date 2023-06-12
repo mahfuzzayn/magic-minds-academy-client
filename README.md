@@ -4,11 +4,12 @@ Live site: https://magic-minds-academy.web.app/
 
 ## Features ✨
 * MongoDB Integrated CRUD Operations.
-* Firebase Authentication Integrated.
 * Custom __Vercel NodeJS Server__ Implemented.
-* Implemented __TailwindCSS,__ __DaisyUI,__ __Image Validator,__ __React Toastify,__ __React Icons__  etc.
-* Firebase Hosting Integrated.
+* Firebase Authentication Integrated.
+* Implemented __TailwindCSS,__ __Chakra UI,__ __Image Validator,__ __React Toastify,__ __React Icons__  etc.
 * Build with Dynamic Data Loading.
-* Single Page Application (SPA). 
+* Firebase Hosting Integrated.
 * Ensured Protected/Private Route. 
 * Desktop and Mobile Responsive.
+* Admin, Instructor & Student Separate Routes. 
+* Single Page Application (SPA). 

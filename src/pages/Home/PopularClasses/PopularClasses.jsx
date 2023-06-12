@@ -17,7 +17,7 @@ const PopularClasses = () => {
     });
 
     return (
-        <div className="popular-classes mx-5">
+        <div className="popular-classes mx-5 mt-[130px]">
             <SectionTitle heading="Popular Classes"></SectionTitle>
             <div className="classes-container container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-auto">
                 {popularClasses.map((currentClass) => (
@@ -37,7 +37,7 @@ const PopularClasses = () => {
                             />
                         </div>
                         <Fade>
-                            <h2 className="text-xl sm:text-2xl font-bold m-2 mb-4 text-center">
+                            <h2 className="text-xl sm:text-2xl font-bold m-2 mb-4 text-black text-center">
                                 {currentClass?.name}
                             </h2>
                         </Fade>
