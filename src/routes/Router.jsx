@@ -42,7 +42,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/instructors",
-                element: <InstructorsPage></InstructorsPage>,
+                element: <InstructorsPage isHeadingVisible={true}></InstructorsPage>,
             },
             {
                 path: "/classes",

@@ -4,7 +4,7 @@ import useInstructorsData from "../../hooks/useInstructorsData";
 import useTitle from "../../hooks/useTitle";
 import { Spinner } from "@chakra-ui/react";
 
-const InstructorsPage = () => {
+const InstructorsPage = ({isHeadingVisible}) => {
     const [instructors, isInstructorsLoading] = useInstructorsData();
     useTitle("Instructors");
 
@@ -27,7 +27,9 @@ const InstructorsPage = () => {
 
     return (
         <div className="instructors">
-            <SectionTitle heading="Instructors"></SectionTitle>
+            {isHeadingVisible && (
+                <SectionTitle heading="Instructors"></SectionTitle>
+            )}
             <div className="box mx-5">
                 <div className="persons-container max-w-[1080px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
                     {instructors.map((instructor) => (
