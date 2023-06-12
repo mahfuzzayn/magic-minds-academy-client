@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { Fade } from "react-awesome-reveal";
 import { motion } from "framer-motion";
+import { Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const PopularClasses = () => {
     const { data: popularClasses = [] } = useQuery({
@@ -37,9 +39,26 @@ const PopularClasses = () => {
                             />
                         </div>
                         <Fade>
-                            <h2 className="text-xl sm:text-2xl font-bold m-2 mb-4 text-black text-center">
-                                {currentClass?.name}
-                            </h2>
+                            <div className="flex flex-col mx-5 mt-4 gap-y-4 mb-4">
+                                <h2 className="text-xl sm:text-2xl font-bold text-black">
+                                    {currentClass?.name}
+                                </h2>
+                                <p className="font-semibold">
+                                    Available Seats:{" "}
+                                    {currentClass?.availableSeats}
+                                </p>
+                                <p className="font-semibold">
+                                    Price:{" "}
+                                    <span className="bg-red-500 text-white p-1 rounded-md">
+                                        ${currentClass?.price}
+                                    </span>
+                                </p>
+                                <Link to="/classes">
+                                    <Button colorScheme="blue">
+                                        View Details
+                                    </Button>
+                                </Link>
+                            </div>
                         </Fade>
                     </motion.div>
                 ))}
